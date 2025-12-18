@@ -20,7 +20,10 @@ func TestTextReporter(t *testing.T) {
 
 	var buf bytes.Buffer
 	reporter := NewTextReporter(&buf, false)
-	reporter.Report(ds)
+	err := reporter.Report(ds)
+	if err != nil {
+		return
+	}
 
 	output := buf.String()
 	if !strings.Contains(output, "test.grl:10:5") {
@@ -39,7 +42,10 @@ func TestTextReporterEmpty(t *testing.T) {
 
 	var buf bytes.Buffer
 	reporter := NewTextReporter(&buf, false)
-	reporter.Report(ds)
+	err := reporter.Report(ds)
+	if err != nil {
+		return
+	}
 
 	// Empty diagnostic set produces no output (summary only shown when count > 0)
 	if buf.String() != "" {

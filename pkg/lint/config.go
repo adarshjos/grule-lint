@@ -112,8 +112,3 @@ func (c *Config) Merge(other *Config) {
 		c.c.Merge(other.c)
 	}
 }
-
-// internal returns the underlying internal config.
-func (c *Config) internal() *config.Config {
-	return c.c
-}

@@ -38,13 +38,19 @@ func (r *TextReporter) Report(diagnostics *diagnostic.DiagnosticSet) error {
 
 	for _, d := range sorted {
 		line := r.formatDiagnostic(d)
-		fmt.Fprintln(r.writer, line)
+		if _, err := fmt.Fprintln(r.writer, line); err != nil {
+			return fmt.Errorf("writing diagnostic: %w", err)
+		}
 	}
 
 	// Print summary
 	if diagnostics.Count() > 0 {
-		fmt.Fprintln(r.writer)
-		fmt.Fprintln(r.writer, r.formatSummary(diagnostics))
+		if _, err := fmt.Fprintln(r.writer); err != nil {
+			return fmt.Errorf("writing newline: %w", err)
+		}
+		if _, err := fmt.Fprintln(r.writer, r.formatSummary(diagnostics)); err != nil {
+			return fmt.Errorf("writing summary: %w", err)
+		}
 	}
 
 	return nil

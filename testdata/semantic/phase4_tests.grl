@@ -1,0 +1,45 @@
+// Test file for Phase 4 rules (GRL007-GRL012)
+
+// GRL007: naming-convention violation (snake_case instead of PascalCase)
+rule process_order "Snake case name" salience 1 {
+    when
+        Order.Status == "pending"
+    then
+        Log("Processing");
+        Retract("process_order");
+}
+
+// GRL012: conflicting-rules (same when clause, no salience differentiation)
+rule ConflictA "First rule" {
+    when
+        Order.Total > 100
+    then
+        Log("Conflict A");
+        Retract("ConflictA");
+}
+
+rule ConflictB "Second rule with same condition" {
+    when
+        Order.Total > 100
+    then
+        Log("Conflict B");
+        Retract("ConflictB");
+}
+
+// Good rule for comparison
+rule GoodRule "Properly formatted rule" salience 5 {
+    when
+        Order.Status == "ready"
+    then
+        Order.Status = "processed";
+        Retract("GoodRule");
+}
+
+// Another naming convention violation
+rule another_bad_name "Also snake case" salience 2 {
+    when
+        Order.Amount > 50
+    then
+        Log("Bad name");
+        Retract("another_bad_name");
+}

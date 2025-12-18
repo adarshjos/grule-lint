@@ -1,0 +1,25 @@
+// Test duplicate rule detection
+
+rule DuplicateRule "First occurrence" salience 1 {
+    when
+        Order.Status == "first"
+    then
+        Log("First");
+        Retract("DuplicateRule");
+}
+
+rule DuplicateRule "Second occurrence" salience 2 {
+    when
+        Order.Status == "second"
+    then
+        Log("Second");
+        Retract("DuplicateRule");
+}
+
+rule DuplicateRule "Third occurrence" salience 3 {
+    when
+        Order.Status == "third"
+    then
+        Log("Third");
+        Retract("DuplicateRule");
+}

@@ -7,6 +7,9 @@
 *.dll
 *.so
 *.dylib
+grule-lint
+dist/
+bin/
 
 # Test binary, built with `go test -c`
 *.test
@@ -16,7 +19,10 @@
 coverage.*
 *.coverprofile
 profile.cov
-
+*.log
+coverage.txt
+coverage.html
+coverage
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
@@ -26,7 +32,21 @@ go.work.sum
 
 # env file
 .env
+.env.local
 
 # Editor/IDE
-# .idea/
-# .vscode/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+build/
+release/
+
+# AI
+.claude
+
+

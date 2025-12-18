@@ -1,0 +1,51 @@
+// Test file with various semantic issues
+
+// GRL002: Missing description
+rule NoDescription salience 10 {
+    when
+        Order.Status == "pending"
+    then
+        Order.Status = "processing";
+        Retract("NoDescription");
+}
+
+// GRL003: Missing salience (also no description - GRL002)
+rule NoSalience {
+    when
+        Order.Total > 0
+    then
+        Order.Valid = true;
+        Retract("NoSalience");
+}
+
+// GRL004: Missing Retract (also no description - GRL002)
+rule NoRetract salience 5 {
+    when
+        Order.Status == "new"
+    then
+        Order.Status = "pending";
+}
+
+// GRL006: High complexity (many conditions)
+rule ComplexRule "Too many conditions" salience 100 {
+    when
+        Order.Status == "pending" &&
+        Order.Total > 100 &&
+        Order.ItemCount > 5 &&
+        Order.CustomerType == "premium" &&
+        Order.Region == "US" &&
+        Order.PaymentMethod == "credit" &&
+        Order.ShippingMethod == "express"
+    then
+        Order.Priority = "high";
+        Retract("ComplexRule");
+}
+
+// Valid rule - should have no issues
+rule ValidRule "This rule has all required elements" salience 50 {
+    when
+        Order.Status == "complete"
+    then
+        Log("Order complete");
+        Retract("ValidRule");
+}

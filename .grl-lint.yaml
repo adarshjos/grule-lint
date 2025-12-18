@@ -1,0 +1,47 @@
+# grule-lint configuration file
+# Severity levels: error, warning, info, hint, off
+
+rules:
+  # GRL001: syntax-error - Always enabled (cannot be disabled)
+
+  # GRL002: missing-description
+  GRL002: warning
+
+  # GRL003: missing-salience
+  GRL003: off   # Disable this check
+
+  # GRL004: missing-retract - Most important! Prevents infinite loops
+  GRL004: error  # Escalate to error
+
+  # GRL005: duplicate-rule
+  GRL005: error
+
+  # GRL006: high-complexity
+  GRL006: warning
+
+  # GRL007: naming-convention (PascalCase by default)
+  GRL007: warning
+
+  # GRL008: unused-variable
+  GRL008: warning
+
+  # GRL009: undefined-variable
+  GRL009: hint   # Hint because we can't know all DataContext variables
+
+  # GRL010: empty-when
+  GRL010: warning
+
+  # GRL011: empty-then
+  GRL011: warning
+
+  # GRL012: conflicting-rules
+  GRL012: warning
+
+# Files to exclude from linting
+exclude:
+  - "**/vendor/**"
+  - "**/testdata/invalid/**"
+
+# Complexity settings
+complexity:
+  max_conditions: 5

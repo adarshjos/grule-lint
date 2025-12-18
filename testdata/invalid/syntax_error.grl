@@ -1,0 +1,13 @@
+rule BrokenRule "This rule has a syntax error" salience 50 {
+    when
+        Order.Status == "pending" &&
+    then
+        Order.Status = "processing";
+        Retract("BrokenRule");
+}
+
+rule AnotherBroken "Missing closing brace" salience 30 {
+    when
+        Order.Total > 100
+    then
+        Order.Discount = 10;

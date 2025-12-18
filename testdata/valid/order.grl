@@ -1,0 +1,17 @@
+rule ProcessOrder "Process pending orders" salience 100 {
+    when
+        Order.Status == "pending" &&
+        Order.Total > 0
+    then
+        Order.Status = "processing";
+        Log("Processing order: " + Order.ID);
+        Retract("ProcessOrder");
+}
+
+rule ValidateOrder "Validate order has items" salience 90 {
+    when
+        Order.ItemCount == 0
+    then
+        Order.Status = "invalid";
+        Retract("ValidateOrder");
+}
